@@ -1,0 +1,209 @@
+======================================================================
+Harvard CS50’s Introduction to Programming with Python – Full University Course
+https://www.youtube.com/watch?v=nLRL_NcnK-4 
+15:57:47 May 1, 2023
+Folders created Mar 2024
+
+⭐️ Course Contents ⭐️
+(00:00:00) Introduction
+(00:04:48) Lecture 0 - Functions, Variables
+(01:50:24) Lecture 1 - Conditionals
+(02:46:23) Lecture 2 - Loops
+(04:07:10) Lecture 3 - Exceptions
+(04:51:45) Lecture 4 - Libraries
+(06:09:15) Lecture 5 - Unit Tests
+(07:00:22) Lecture 6 - File I/O
+(08:32:32) Lecture 7 - Regular Expressions
+(10:37:35) Lecture 8 - Object-Oriented Programming
+(13:28:47) Lecture 9 - Et Cetera
+======================================================================
+CTRL + /   		Multiline comment
+CTRL + D   		Select next instance of word
+CTRL + V                Copy next instance of word
+SHIFT - ALT DOWN	Copy line
+CTRL + SHIFT + P        Show all commands
+CTRL + P                Go to file
+CTRL + SHIFT + F        Find in Files
+F11                     Toggle Full Screen
+CTRL + .
+CTRL + B                Hide / Show File Explorer        
+ALT + Z                 Split Lines   
+WINDOWS + .             Emoji
+======================================================================
+
+
+Application Structures
+https://www.youtube.com/watch?v=r5G2OiYZAvk&t=29s
+Tim Corey
+
+
+DDD - Domain Driven Design 
+
+Onion Architecture - 
+	Domain Layer, Application Layer, Infrastructure Layer, Presentation layer
+
+Three Layer Design
+	Presentation, Business, Persistence, Database
+
+CQRS  - Command Query Responsibility Segregation
+
+Everything in code behind
+
+I Start Simple
+	1 Class library
+	1 User Interface
+  Only refactor
+
+II  DRY - Dont repeat yourself
+    Some repetition is OK
+
+III Taking all logic out of UI code and putting in library
+    Added complexity but no added value
+  
+IV Goal is to keep it simple
+   Trying to implement lots of design patterns
+
+##########################################################################
+pypi.org/project/cowsay
+pypi.org/project/requests
+
+JSON = Java Script Object Notation
+docs.python.org/3/library/json.html
+https://performance-partners.apple.com/search-api
+pip install pytest
+##########################################################################
+say.py
+##########################################################################
+
+import sys
+
+from sayings import hello
+
+if len(sys.argv) == 2:
+    hello(sys.argv[1])
+
+##########################################################################
+sayings.py
+##########################################################################
+
+hello("world")
+goodbye("world")
+
+def hello(name):
+    print(f"hello, {name}")
+
+def goodbye(name):
+    print(f"goodbye, {name}")
+
+if __name__ == "__main__"
+    main()
+
+##########################################################################
+calculator.py
+##########################################################################
+def main():
+    x = int(input("What is x? "))
+    print("x squared is", square(x))
+
+
+def square(n):
+   return n * n
+
+if __name__ == "__main__":
+    main()
+
+##########################################################################
+test_calculator.py
+##########################################################################
+def main():
+    try:
+        assert square(-2) == 4
+    except AssertionError:
+        print("-2 squared was not 4")
+    try:
+        assert square(-3) == 9
+    except AssertionError:
+        print("-3 squared was not 9")
+    try:
+        assert square(3) == 9
+    except AssertionError:
+        print("3 squared was not 9")
+    try:
+        assert square(2) == 4
+    except AssertionError:
+        print("2 squared was not 4")
+    try:
+        assert square(0) == 0
+    except AssertionError:
+        print("0 squared was not 0")
+
+if __name__ == "__main__":
+    main()
+
+##########################################################################
+test_calculator.py
+
+docs.pytest.org
+pytest test_calculator.py
+##########################################################################
+from calculator import square
+
+def test_square():
+    assert square(2) == 4
+    assert square(3) == 9
+    assert square(-2) == 4
+    assert square(-3) == 9
+    assert square(0) == 0
+
+##########################################################################
+names.py
+##########################################################################
+
+name = input("What's your name? ")
+
+with open("names.txt", "a") as file:
+    file.write(f"{name}\n")
+
+##########################################################################
+names.py
+##########################################################################
+
+with open("names.txt", "r") as file:
+    lines = file.readlines()
+
+for line in lines:
+    print("hello,", line)
+
+##########################################################################
+names.py
+##########################################################################
+
+names = []
+
+with open("names.txt", "r") as file:
+    for line in file:
+        names.append(line.rstrip())
+
+for name in sorted(names):
+    print("hello, {name}")
+    
+##########################################################################
+students.py
+##########################################################################
+
+students = []
+
+with open("students.csv") as file:
+    for line in file:
+        name, house = line.rstrip().split(",")
+        students.append(f"{name} is in {house}")
+
+for student in sorted(students):
+    print(student) 
+
+##########################################################################
+CS50 8:30 GIF
+     5:40 iTunes
+##########################################################################
+
+

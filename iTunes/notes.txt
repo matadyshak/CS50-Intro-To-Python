@@ -1,0 +1,82 @@
+03-11-24
+
+itunes project from cs50
+
+1) Specified to click on Python debugger: Current file with arguments and nothing specified for args in launch.json
+
+THIS WORKS - LAUNCHES PORT 51718 AND GIVES PATH TO ITUNES.PY
+
+PS C:\Users\miket\Documents\Repos\Python\CS50\iTunes>  c:;
+cd 'c:\Users\miket\Documents\Repos\Python\CS50\iTunes'; & 
+'c:\Users\miket\AppData\Local\Programs\Python\Python312\python.exe'
+'c:\Users\miket\.vscode\extensions\ms-python.debugpy-2024.0.0-win32-x64\bundled\libs\debugpy\adapter/../..\debugpy\launcher'
+'51718'
+'--'
+'C:\Users\miket\Documents\Repos\Python\CS50\iTunes\itunes.py'
+'The+Beatles'
+
+THIS FAILS - LAUNCHES PORT 51702 AND GIVES PATH TO LAUNCH.JSON
+
+PS C:\Users\miket\Documents\Repos\Python\CS50\iTunes>  c:;
+cd 'c:\Users\miket\Documents\Repos\Python\CS50\iTunes'; & 
+'c:\Users\miket\AppData\Local\Programs\Python\Python312\python.exe'
+'c:\Users\miket\.vscode\extensions\ms-python.debugpy-2024.0.0-win32-x64\bundled\libs\debugpy\adapter/../..\debugpy\launcher'
+'51702'
+'--'
+'C:\Users\miket\Documents\Repos\Python\CS50\iTunes\.vscode\launch.json'
+'The+Beatles' 
+
+
+1. ACTUALLY ALWAYS RUNS OK USING DROP DOWN "PYTHON DEBUGGER: CURRENT FILE WITH ARGUMENTS"
+
+2. "args": ["The+Beatles] => defined in launch.json
+
+3. Generated a new 5-digit port number for debugger to communicate with the task being debugged
+
+4. If you just up-arrow you will get this error:
+   ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
+
+5. If you click Run with Arguments and launch.json is currently displayed in VS Code this error appears:
+
+   File "C:\Users\miket\Documents\Repos\Python\CS50\iTunes\.vscode\launch.json", line 2
+    // Use IntelliSense to learn about possible attributes.
+
+####################################################################################################
+working code
+####################################################################################################
+
+import json
+import requests
+import argparse
+import sys
+
+def main():
+    if len(sys.argv) != 3:
+        sys.exit()
+    parser = argparse.ArgumentParser(description='iTunes: Artist')
+    parser.add_argument("-a", "--artist", action="store", required=True)
+    args_dict = vars(parser.parse_args())
+    args_str = args_dict["artist"]
+
+    response = requests.get("https://itunes.apple.com/search?entity=song&limit=50&term=" + args_str)
+
+    # Change the + signs used in the URL back to space chars
+    args_str = args_str.replace("+", " ")
+    
+    count = 0
+    obj = response.json()
+    for result in obj["results"]:
+        if (result["artistName"] == args_str):
+            print(result["trackName"])
+            count += 1
+
+    print( f"Total songs found: {count}")
+
+
+if __name__ == "__main__":
+    main()
+
+####################################################################################################
+working code
+####################################################################################################
+
